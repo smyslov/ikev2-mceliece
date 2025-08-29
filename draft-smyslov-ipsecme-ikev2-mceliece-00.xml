@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
+<rfc category="std" ipr="trust200902" docName="draft-smyslov-ipsecme-ikev2-mceliece-00">
+
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+
+<?rfc toc="yes" ?>
+<?rfc symrefs="yes" ?>
+<?rfc sortrefs="no"?>
+<?rfc iprnotified="no" ?>
+<?rfc strict="yes" ?>
+
+    <front>
+        <title abbrev="Classic McEliece in IKEv2">Using Classic McEliece in the Internet Key Exchange Protocol Version 2 (IKEv2)</title>
+        <author initials='V.' surname="Smyslov" fullname='Valery Smyslov'>
+            <organization>ELVIS-PLUS</organization>
+            <address>
+                <postal>
+                    <country>RU</country>
+                </postal>
+                <phone></phone>
+                <email>svan@elvis.ru</email>
+            </address>
+        </author>
+        <author initials="Y." surname="Nir" fullname="Yoav Nir">
+            <organization>Dell Technologies</organization>
+            <address>
+                <postal>
+                    <street>9 Andrei Sakharov St</street>
+                    <city>Haifa</city>
+                    <code>3190500</code>
+                    <country>Israel</country>
+                </postal>
+                <email>ynir.ietf@gmail.com</email>
+            </address>
+        </author>
+        <date/>
+
+        <abstract>
+            <t> This document specifies how Classic McEliece Key Encapsulation Mechanism (KEM) is used in IKEv2.
+            </t>
+        </abstract>
+    </front>
+
+    <middle>
+        <section title="Introduction">
+        </section>
+
+        <section anchor="mustshouldmay" title="Terminology and Notation">
+            <t> The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", 
+            "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted 
+            as described in BCP 14 <xref target="RFC2119" /> <xref target="RFC8174" /> when, and only when, 
+            they appear in all capitals, as shown here.
+            </t>
+
+            <t> It is assumed that readers are familiar with the IKEv2 protocol <xref target="RFC7296" />.
+            </t>
+        </section>
+
+        <section anchor="mceliece" title="Classic McEliece KEM">
+        </section>
+
+        <section anchor="mceliece-ikev2" title="Using Classic McEliece in IKEv2">
+        </section>
+
+        <section anchor="security" title="Security Considerations">
+        </section>
+
+        <section anchor="iana" title="IANA Considerations">
+        </section>
+
+        <section anchor="ack" title="Acknowledgements">
+        </section>
+
+    </middle>
+
+    <back>
+        <references title='Normative References'>
+            <?rfc include="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml" ?>
+            <?rfc include="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml" ?>
+            <?rfc include="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7296.xml" ?>
+            <?rfc include="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7383.xml" ?>
+            <?rfc include="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9242.xml" ?>
+            <?rfc include="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9370.xml" ?>
+            <?rfc include="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.josefsson-mceliece.xml"?>
+            <?rfc include="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.nir-ipsecme-big-payload.xml"?>
+        </references>
+
+        <references title='Informative References'>
+            <?rfc include="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9329.xml" ?>
+            <?rfc include="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.smyslov-ipsecme-ikev2-reliable-transport.xml"?>
+        </references>
+    </back>
+</rfc>
+
+
