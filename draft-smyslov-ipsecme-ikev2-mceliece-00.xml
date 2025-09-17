@@ -62,7 +62,9 @@
             Hellman or an elliptic curve variant.  The McEliece exchange needs to be carried in an 
             IKE_INTERMEDIATE exchange (<xref target="RFC9242"/>), after negotiating in the IKE_SA_INIT both
             support for big payloads and the additional key exchange exchange through the 
-            INTERMEDIATE_EXCHANGE_SUPPORTED notify message (<xref target="RFC9370"/>).</t>
+            INTERMEDIATE_EXCHANGE_SUPPORTED notify message (<xref target="RFC9370"/>). The Classic Mceliece
+            KEM can also be used in CREATE_CHILD_SA. For that, support for the intermediate exchange is not
+            necessary.</t>
           <t> TBD if this document should make any recommendations about which DH group to use for the 
             initial key exchange, or whether it should remain silent on the topic.</t>
 
@@ -101,7 +103,8 @@
             group offered in an ADDKE payload if the initiator has not negotiated the support for both big
             payloads and for fragmentation.</t>
           <t> Within the IKE_INTERMEDIATE exchange, such payloads will normally encode the large public
-            keys. A diagram is provided here for illustration:</t>
+            keys. A diagram is provided here for illustration:. The format below is the big payload version
+            of the Key Exchange from section 3.4 of <xref target="RFC7296"/>.</t>
          <figure> 
             <artwork><![CDATA[
                         1                   2                   3
@@ -109,15 +112,32 @@
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    | Next Payload  |C|L| RESERVED  |         Payload Length        
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      continued.                   | The public key of the McEliece
+      length continued...          |   Diffie-Hellman Group Num    | 
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   
-    KEM begins here...
+   |           RESERVED            | McEliece KEM key data         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               +
+   |                                                               |
+   ~                   KEM key data continues...                   ~
+   |                                                               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
            ]]></artwork>
           </figure>
+          <ul>
+            <li> L is 1, indicating that the length field is 32-bit.</li>
+            <li> The Diffie-Hellman Group Num is TBD, the value assigned by IANA (see 
+              <xref target="iana"/>)</li>
+            <li> The McEliece KEM key data is as described in section 6.3 of <xref 
+              target="I-D.josefsson-mceliece"/>. </li>
+          </ul>
           <t> An IKE exchange that uses big payloads can run over UDP. It MAY also work over TCP 
             (<xref target="RFC9329"/>) or over separate transports 
             (<xref target="I-D.smyslov-ipsecme-ikev2-reliable-transport"/>) if available.</t>
+          <section anchor="child_sa" title="Using Classic McEliece for Child SAs">
+            <t> The Classic McEliece KEM can also be used in the CREATE_CHILD_SA exchange to create
+              IKE and IPsec SAs. That format and size are just the sane, so doing this also requires
+              support for big payloads and for IKE fragmentation.</t>
+          </section>  
         </section>
 
         <section anchor="security" title="Security Considerations">
