@@ -52,11 +52,12 @@
             to be safe even against an adversary equipped with a quantum computer.  The twelve parameter  
             sets described in section 9 of <xref target="I-D.josefsson-mceliece"/> offers different balances
             between performance and output sizes.</t>
-          <t> As usual in IKEv2, the public keys are carried in Key Exchange (KE) payloads. With a typical 
-            parameter set from the draft, mceliece6688128, such a public key requires (see section 8.2.7 of 
-            the McEliece document) 1044992 octets to encode. This is almost 16 times as big as a standard KE 
-            payload (or any other payload) can carry, so we need to use a big payload, as specified in the 
-            big payload draft (<xref target="I-D.nir-ipsecme-big-payload"/>).</t>
+          <t> The information needed for key agreement (in the case of McEliece this is a public key and a 
+            ciphertext) is carried in Key Exchange (KE) payloads. With the most common parameter set from 
+            the draft, mceliece6688128, the public key requires (see section 8.2.7 of the McEliece document) 
+            1044992 octets to encode. This is almost 16 times as big as a standard KE payload (or any other 
+            payload) can carry, so we need to use a big payload, as specified in the big payload draft 
+            (<xref target="I-D.nir-ipsecme-big-payload"/>).</t>
           <t> Because large payloads cannot be used (see section 2.3 of the big payload document) in the
             IKE_SA_INIT exchange, The first key exchange has to use another algorithm, such as classic Diffie-
             Hellman or an elliptic curve variant.  The McEliece exchange needs to be carried in an 
@@ -110,9 +111,9 @@
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   | Next Payload  |C|L| RESERVED  |         Payload Length        
+   | Next Payload  |C|L| RESERVED  |       Payload Length...        
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      length continued...          |   Diffie-Hellman Group Num    | 
+      ...length continued          |      Key Exchange Method      | 
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   
    |           RESERVED            | McEliece KEM key data         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               +
@@ -129,6 +130,9 @@
               <xref target="iana"/>)</li>
             <li> The McEliece KEM key data is as described in section 6.3 of <xref 
               target="I-D.josefsson-mceliece"/>. </li>
+            <li> Note that when the KE payload is used to carry ciphertext, it can fit with the 
+              short payload format. It is not required to always use the big payload format to
+              use McEliece.</li>
           </ul>
           <t> An IKE exchange that uses big payloads can run over UDP. It MAY also work over TCP 
             (<xref target="RFC9329"/>) or over separate transports 
