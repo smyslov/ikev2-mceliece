@@ -126,7 +126,7 @@
           </figure>
           <ul>
             <li> L is 1, indicating that the length field is 32-bit.</li>
-            <li> The Diffie-Hellman Group Num is TBD, the value assigned by IANA (see 
+            <li> The Key Exchange Method is TBD, the value assigned by IANA (see 
               <xref target="iana"/>)</li>
             <li> The McEliece KEM key data is as described in section 6.3 of <xref 
               target="I-D.josefsson-mceliece"/>. </li>
@@ -181,5 +181,6 @@
         </references>
     </back>
 </rfc>
+
 
 
