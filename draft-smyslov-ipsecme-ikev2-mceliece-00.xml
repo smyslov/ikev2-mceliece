@@ -61,7 +61,7 @@
             payload) can carry, so we need to use a big payload, as specified in the big payload draft 
             (<xref target="I-D.nir-ipsecme-big-payload"/>).</t>
           <t> Because large payloads cannot be used in the IKE_SA_INIT exchange
-          (see section 2.3 of <xref target="I-D.nir-ipsecme-big-payload" />) , the first key exchange 
+          (see section 2.3 of <xref target="I-D.nir-ipsecme-big-payload" />), the first key exchange 
           has to use another algorithm, such as classic Diffie-
             Hellman or an elliptic curve variant.  The McEliece exchange needs to be carried in an 
             IKE_INTERMEDIATE exchange (<xref target="RFC9242"/>), after negotiating in the IKE_SA_INIT both
