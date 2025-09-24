@@ -18,9 +18,11 @@
             <organization>ELVIS-PLUS</organization>
             <address>
                 <postal>
+                    <street>PO Box 81</street>
+                    <city>Moscow (Zelenograd)</city>
+                    <code>124460</code>
                     <country>RU</country>
                 </postal>
-                <phone></phone>
                 <email>svan@elvis.ru</email>
             </address>
         </author>
@@ -58,8 +60,9 @@
             1044992 octets to encode. This is almost 16 times as big as a standard KE payload (or any other 
             payload) can carry, so we need to use a big payload, as specified in the big payload draft 
             (<xref target="I-D.nir-ipsecme-big-payload"/>).</t>
-          <t> Because large payloads cannot be used (see section 2.3 of the big payload document) in the
-            IKE_SA_INIT exchange, The first key exchange has to use another algorithm, such as classic Diffie-
+          <t> Because large payloads cannot be used in the IKE_SA_INIT exchange
+          (see section 2.3 of <xref target="I-D.nir-ipsecme-big-payload" />), the first key exchange 
+          has to use another algorithm, such as classic Diffie-
             Hellman or an elliptic curve variant.  The McEliece exchange needs to be carried in an 
             IKE_INTERMEDIATE exchange (<xref target="RFC9242"/>), after negotiating in the IKE_SA_INIT both
             support for big payloads and the additional key exchange exchange through the 
@@ -68,15 +71,15 @@
             necessary.</t>
           <t> TBD if this document should make any recommendations about which DH group to use for the 
             initial key exchange, or whether it should remain silent on the topic.</t>
+        </section>
 
         <section anchor="mustshouldmay" title="Terminology and Notation">
-            <t> The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", 
-            "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted 
+            <t> The key words <bcp14>"MUST"</bcp14>, <bcp14>"MUST NOT"</bcp14>, <bcp14>"REQUIRED"</bcp14>, <bcp14>"SHALL"</bcp14>, <bcp14>"SHALL NOT"</bcp14>, <bcp14>"SHOULD"</bcp14>, <bcp14>"SHOULD NOT"</bcp14>, 
+            <bcp14>"RECOMMENDED"</bcp14>, <bcp14>"NOT RECOMMENDED"</bcp14>, <bcp14>"MAY"</bcp14>, and <bcp14>"OPTIONAL"</bcp14> in this document are to be interpreted 
             as described in BCP 14 <xref target="RFC2119" /> <xref target="RFC8174" /> when, and only when, 
             they appear in all capitals, as shown here.</t>
             <t> It is assumed that readers are familiar with the IKEv2 protocol <xref target="RFC7296" />.
             </t>
-        </section>
         </section>
 
         <section anchor="mceliece" title="Classic McEliece KEM">
@@ -90,17 +93,17 @@
         </section>
 
         <section anchor="mceliece-ikev2" title="Using Classic McEliece in IKEv2">
-          <t> To negotiate the use of the McEliece KEM, an IKEv2 initiator and responder MUST negotiate
+          <t> To negotiate the use of the McEliece KEM, an IKEv2 initiator and responder <bcp14>MUST</bcp14> negotiate
             three things in the IKE_SA_INIT exchange:</t>
           <ul>
             <li> The support for big IKE payloads (<xref target="I-D.nir-ipsecme-big-payload"/>) </li>
-            <li> Support for message fragmentation (<xref target="RFC7383"/>) </li>
+            <li> Support for IKE fragmentation (<xref target="RFC7383"/>) </li>
             <li> The use of these groups, see <xref target="iana"/>, as ADDKE. This implies support for
               the IKE_INTERMEDIATE exchange.</li>
           </ul>
           <t> Since all of the above have to be specified in the IKE_SA_INIT request, the McEliece key
-            exchange, a Responder MUST reject any McEliece group offered in an ADDKE payload if it does
-            not support both big IKE payloads and fragmentation. Additionally, it MUST reject any McEliece
+            exchange, a Responder <bcp14>MUST</bcp14> reject any McEliece group offered in an ADDKE payload if it does
+            not support both big IKE payloads and fragmentation. Additionally, it <bcp14>MUST</bcp14> reject any McEliece
             group offered in an ADDKE payload if the initiator has not negotiated the support for both big
             payloads and for fragmentation.</t>
           <t> Within the IKE_INTERMEDIATE exchange, such payloads will normally encode the large public
@@ -130,18 +133,46 @@
               <xref target="iana"/>)</li>
             <li> The McEliece KEM key data is as described in section 6.3 of <xref 
               target="I-D.josefsson-mceliece"/>. </li>
-            <li> Note that when the KE payload is used to carry ciphertext, it can fit with the 
-              short payload format. It is not required to always use the big payload format to
-              use McEliece.</li>
           </ul>
-          <t> An IKE exchange that uses big payloads can run over UDP. It MAY also work over TCP 
-            (<xref target="RFC9329"/>) or over separate transports 
-            (<xref target="I-D.smyslov-ipsecme-ikev2-reliable-transport"/>) if available.</t>
-          <section anchor="child_sa" title="Using Classic McEliece for Child SAs">
-            <t> The Classic McEliece KEM can also be used in the CREATE_CHILD_SA exchange to create
-              IKE and IPsec SAs. That format and size are just the sane, so doing this also requires
-              support for big payloads and for IKE fragmentation.</t>
+          <t> Note that when the KE payload is used to carry ciphertext, it can fit with the 
+          short payload format. It is not required to always use the big payload format to
+          use Classic McEliece.</t>
+
+          <section anchor="child_sa" title="Using Classic McEliece for Child SAs and for IKE SA Rekey">
+            <t> The Classic McEliece KEM can also be used in the CREATE_CHILD_SA exchange (or in the IKE_FOLLOWUP_KE exchange 
+            as defined in <xref target="RFC9370"/>) to rekey
+              IKE SA and to create/rekey IPsec SAs. The format and size are just the same, so doing this also requires
+              support for big payloads and for IKE fragmentation. However, if Classic McEliece 
+              is only used in these exchanges, there is no need to negotiate the IKE_INTERMEDIATE exchange.</t>
           </section>  
+        </section>
+
+        <section anchor="transport" title="Transport Considerations">
+            <t> While an IKE SA that utilizes Classic McEliece can run over UDP, in most settings 
+            this will be problematic. The reason is that with tipical MTU size of 1500 bytes, 
+            an IKE message containing Classic McEliece public key will be splitted into several
+            hundreds IKE fragment messages, which will be sent to the network at once.
+            This may lead to network congestion causing loss of some messages, in which case all
+            the fragment messages will be re-sent again (after timeout), since IKE fragment messages are not 
+            individually acknowledged. This will also lead to congestion and the process will repeat
+            until all the fragment messages will be received, but this might not happen.
+            </t>
+
+            <t> For this reason peers may want to use TCP as a transport. Peers may choose between 
+            using TCP for both IKE and ESP as specified in <xref target="RFC9329"/> or using separate 
+            transports for them <xref target="I-D.smyslov-ipsecme-ikev2-reliable-transport"/>.
+            The latter allows to avoid performance degradation when tunnelling TCP trafic 
+            and thus is <bcp14>RECOMMENDED</bcp14>.
+            </t>
+
+            <t>Note, that despite the fact, that TCP can tranfer messages of any size without
+            having problems with IP fragmentation, in case of Classic McEliece peers
+            still have to negotiate IKE fragmentation <xref target="RFC7383" /> as defined
+            in <xref target="mceliece-ikev2" />, even when they choose to use TCP as a transport for IKE.
+            This is due to the limitation imposed by <xref target="RFC9329"/> that individual
+            IKE message in TCP stream cannot exceed 64 Kbytes. Thus, larger IKE messages
+            need to be be fragmented to this size by IKE fragmentation mechanism before sending over TCP.
+            </t>
         </section>
 
         <section anchor="security" title="Security Considerations">
