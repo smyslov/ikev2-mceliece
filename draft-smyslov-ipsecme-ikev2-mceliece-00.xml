@@ -86,10 +86,89 @@
           <t> The <xref target="I-D.josefsson-mceliece"/> document specifies 12 parameter sets. Should we
             just leave it at that, or specify just one? The current SSH candidate draft specifies only
             mceliece6688128. The current TLS candidate draft specifies 3: mceliece6688128, mceliece6960119,
-            and mceliece8192128. What should we do?</t>
-          <t> This is up to the working group, but until this is decided, perhaps we should add a table here 
-            a comparison table between the parameter sets. Ultimately, there is nothing special about IKEv2. 
+            and mceliece8192128. Official Classic McEliece site <xref target="MCELIECE" /> lists 5
+            parameter sets. What should we do?</t>
+
+            <!-- The number of parameter sets in draft-josefsson-mceliece is confusing. First, 
+            the other Simon's draft - draft-josefsson-ssh-mceliece says that "f" parameter sets 
+            only define a different algorithm for key generation - faster, but more complex.
+            The generated keys are compatible with non-"f" algorithms. Thus, we may consider
+            choice between "f" and non-"f" implementation dependand and do not allocate 
+            code points for "f" parameter sets.
+
+            Then, there are "pc" and non-"pc" parameter sets. From what I learned reading
+            official site https://classic.mceliece.org/impl.html, "pc" stands for "plaintext confirmation"
+            and it seems to be older McEliece variants. Can we disregard them?
+
+            Thus only 3 variants are left: mceliece6688128, mceliece6960119, mceliece8192128.
+            liboqs also lists mceliece348864 and mceliece 460896.
+
+            The main puzzle for me is the difference between mceliece6688128 and mceliece6960119 - 
+            they have almost identical key size (and presumably security). Why both are needed?
+            Another puzzle is that draft-josefsson-mceliece for some reason ignores
+            parameter sets for NIST level less than 5. I would list all of variants
+            from official site.
+            -->
+
+          <t> This is up to the working group. Until this is decided, we added 
+            a comparison table between the parameter sets here. Ultimately, there is nothing special about IKEv2. 
             What is fitting for TLS and SSH is likely fitting for IKEv2 as well.</t>
+
+          <table title="Classic McEliece Parameter Set Summary">
+            <thead>
+              <tr>
+                  <th>Parameter Set</th>
+                  <th>Claimed NIST Leve</th>
+                  <th>Public key size (bytes)</th>
+                  <th>Secret key size (bytes)</th>
+                  <th>Ciphertext size (bytes)</th>
+                  <th>Shared secret size (bytes)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                  <th>mceliece348864</th>
+                  <th>1</th>
+                  <th>261120</th>
+                  <th>6492</th>
+                  <th>96</th>
+                  <th>32</th>
+              </tr>
+              <tr>
+                  <th>mceliece460896</th>
+                  <th>3</th>
+                  <th>524160</th>
+                  <th>13608</th>
+                  <th>156</th>
+                  <th>32</th>
+              </tr>
+              <tr>
+                  <th>mceliece6688128</th>
+                  <th>5</th>
+                  <th>1044992</th>
+                  <th>13932</th>
+                  <th>208</th>
+                  <th>32</th>
+              </tr>
+              <tr>
+                  <th>mceliece6960119</th>
+                  <th>5</th>
+                  <th>1047319</th>
+                  <th>13948</th>
+                  <th>194</th>
+                  <th>32</th>
+              </tr>
+              <tr>
+                  <th>mceliece8192128</th>
+                  <th>5</th>
+                  <th>1357824</th>
+                  <th>14120</th>
+                  <th>208</th>
+                  <th>32</th>
+              </tr>
+            </tbody>
+          </table>
+
         </section>
 
         <section anchor="mceliece-ikev2" title="Using Classic McEliece in IKEv2">
@@ -206,6 +285,14 @@
         </references>
 
         <references title='Informative References'>
+            <reference anchor="MCELIECE" target="https://classic.mceliece.org/">
+                <front>
+                    <title>Classic McEliece</title>
+                    <author>
+                        <organization/>
+                    </author>
+                </front>
+            </reference>
             <?rfc include="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9329.xml" ?>
             <?rfc include="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4301.xml" ?>
             <?rfc include="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.smyslov-ipsecme-ikev2-reliable-transport.xml"?>
