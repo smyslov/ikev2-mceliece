@@ -83,6 +83,11 @@
         </section>
 
         <section anchor="mceliece" title="Classic McEliece KEM">
+          <t>Classic McEliece is a code-based Key Encapsulation Mechanism (KEM) that is  considered conservative 
+          and very thoroughly analysed. It is currently being standardised by ISO <xref target="ISO" /> and is also recommended 
+          for  protection of confidential information by some authorities <xref target="BSI" />.
+          </t>
+
           <t> The <xref target="I-D.josefsson-mceliece"/> document specifies 12 parameter sets. Should we
             just leave it at that, or specify just one? The current SSH candidate draft specifies only
             mceliece6688128. The current TLS candidate draft specifies 3: mceliece6688128, mceliece6960119,
@@ -291,6 +296,23 @@
                     <author>
                         <organization/>
                     </author>
+                </front>
+            </reference>
+            <reference anchor="ISO" target="https://www.iso.org/standard/86890.html">
+                <front>
+                    <title>Information technology — Security techniques — Encryption algorithms — Part 2: Asymmetric ciphers Amendment 2</title>
+                    <author>
+                        <organization>International Organization for Standardization (ISO)</organization>
+                    </author>
+                </front>
+            </reference>
+            <reference anchor="BSI" target="https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-1.html">
+                <front>
+                    <title>Cryptographic Mechanisms: Recommendations and Key Lengths</title>
+                    <author>
+                        <organization>Federal Office for Information Security (BSI)</organization>
+                    </author>
+                    <date>January 31, 2025</date>
                 </front>
             </reference>
             <?rfc include="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9329.xml" ?>
