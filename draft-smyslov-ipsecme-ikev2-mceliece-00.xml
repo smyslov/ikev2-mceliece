@@ -84,7 +84,7 @@
 
         <section anchor="mceliece" title="Classic McEliece KEM">
           <t>Classic McEliece <xref target="I-D.josefsson-mceliece"/> is a code-based Key Encapsulation Mechanism 
-          (KEM) that is  considered conservative and very thoroughly analysed.
+          (KEM) that is considered conservative and very thoroughly analysed.
           </t>
 
           <t> The <xref target="I-D.josefsson-mceliece"/> document specifies 12 parameter sets. Should we
@@ -303,6 +303,7 @@
         </references>
     </back>
 </rfc>
+
 
 
 
