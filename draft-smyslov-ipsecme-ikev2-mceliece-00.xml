@@ -74,8 +74,8 @@
         </section>
 
         <section anchor="mustshouldmay" title="Terminology and Notation">
-            <t> The key words <bcp14>"MUST"</bcp14>, <bcp14>"MUST NOT"</bcp14>, <bcp14>"REQUIRED"</bcp14>, <bcp14>"SHALL"</bcp14>, <bcp14>"SHALL NOT"</bcp14>, <bcp14>"SHOULD"</bcp14>, <bcp14>"SHOULD NOT"</bcp14>, 
-            <bcp14>"RECOMMENDED"</bcp14>, <bcp14>"NOT RECOMMENDED"</bcp14>, <bcp14>"MAY"</bcp14>, and <bcp14>"OPTIONAL"</bcp14> in this document are to be interpreted 
+            <t> The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", 
+            "<bcp14>RECOMMENDED</bcp14>", "<bcp14>NOT RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted 
             as described in BCP 14 <xref target="RFC2119" /> <xref target="RFC8174" /> when, and only when, 
             they appear in all capitals, as shown here.</t>
             <t> It is assumed that readers are familiar with the IKEv2 protocol <xref target="RFC7296" />.
@@ -83,6 +83,10 @@
         </section>
 
         <section anchor="mceliece" title="Classic McEliece KEM">
+          <t>Classic McEliece <xref target="I-D.josefsson-mceliece"/> is a code-based Key Encapsulation Mechanism 
+          (KEM) that is considered conservative and very thoroughly analysed.
+          </t>
+
           <t> The <xref target="I-D.josefsson-mceliece"/> document specifies 12 parameter sets. Should we
             just leave it at that, or specify just one? The current SSH candidate draft specifies only
             mceliece6688128. The current TLS candidate draft specifies 3: mceliece6688128, mceliece6960119,
@@ -299,6 +303,7 @@
         </references>
     </back>
 </rfc>
+
 
 
 
